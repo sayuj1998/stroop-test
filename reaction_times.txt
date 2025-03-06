@@ -1,0 +1,14 @@
+Name: hi | Trial: 1 | Reaction time: 1.669987 seconds
+Name: hi | Trial: 2 | Reaction time: 0.785953 seconds
+Name: hi | Trial: 3 | Reaction time: 0.219167 seconds
+Name: hi | Trial: 4 | Reaction time: 0.380011 seconds
+Name: hi | Trial: avg | Reaction time: 0.763780 seconds
+
+Name: hello | Trial: 1 | Reaction time: 3.511003 seconds
+Name: hello | Trial: 2 | Reaction time: 0.754970 seconds
+Name: hello | Trial: 3 | Reaction time: 0.396393 seconds
+Name: hello | Trial: 4 | Reaction time: 0.524584 seconds
+Name: hello | Trial: 5 | Reaction time: 0.618064 seconds
+Name: hello | Trial: 6 | Reaction time: 0.208208 seconds
+Name: hello | Trial: avg | Reaction time: 1.002204 seconds
+
