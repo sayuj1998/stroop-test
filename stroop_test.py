@@ -3,16 +3,14 @@ import random
 import time
 import os
 
-
 class StroopTest:
-    def __init__(self, user_name):
-        self.user_name = user_name
+    def __init__(self):
         # Initialize pygame
         pygame.init()
 
         # Screen dimensions
-        self.SCREEN_WIDTH = 800
-        self.SCREEN_HEIGHT = 600
+        self.SCREEN_WIDTH = 1000
+        self.SCREEN_HEIGHT = 800
 
         # Colors
         self.BLACK = (0, 0, 0)
@@ -30,15 +28,19 @@ class StroopTest:
         self.BUTTON_HEIGHT = 50
 
         # Set up the display
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         pygame.display.set_caption("Stroop Test")
 
         # Set up font
-        self.font = pygame.font.Font(None, 74)
+        self.font = pygame.font.Font(None, 75)
         self.button_font = pygame.font.Font(None, 50)
+        self.input_font = pygame.font.Font(None, 50)
 
         # Initialize reaction times list
         self.reaction_times = []
+
+        # Initialize user name
+        self.user_name = ""
 
     def display_text(self, text, color, x, y):
         text_surface = self.font.render(text, True, color)
@@ -63,7 +65,55 @@ class StroopTest:
                 return color_name
         return None
 
-    def run_test(self, trials=10):
+    def get_user_name(self):
+        self.screen.fill(self.BLACK)
+        input_box = pygame.Rect(self.SCREEN_WIDTH // 2 - 100, self.SCREEN_HEIGHT // 2 - 25, 200, 50)
+        go_button = pygame.Rect(self.SCREEN_WIDTH // 2 - 75, self.SCREEN_HEIGHT // 2 + 50, 150, 50)
+        color_inactive = pygame.Color('white')
+        color_active = pygame.Color('white')
+        color = color_inactive
+        active = False
+        text = ''
+        done = False
+
+        while not done:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return True
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if input_box.collidepoint(event.pos):
+                        active = not active
+                    else:
+                        active = False
+                    if go_button.collidepoint(event.pos) and text:
+                        self.user_name = text
+                        done = True
+                    color = color_active if active else color_inactive
+                if event.type == pygame.KEYDOWN:
+                    if active:
+                        if event.key == pygame.K_RETURN and text:
+                            self.user_name = text
+                            done = True
+                        elif event.key == pygame.K_BACKSPACE:
+                            text = text[:-1]
+                        else:
+                            text += event.unicode
+
+            self.screen.fill(self.BLACK)
+            txt_surface = self.input_font.render(text, True, color)
+            width = max(200, txt_surface.get_width() + 10)
+            input_box.w = width
+            self.screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+            pygame.draw.rect(self.screen, color, input_box, 2)
+            self.display_text("Enter your name:", self.WHITE, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 - 100)
+            self.draw_button("Go", self.GREEN, go_button.x, go_button.y, go_button.width, go_button.height)
+            pygame.display.flip()
+
+        return False
+
+    def run_test(self, trials=2):
+        self.reaction_times = []  # Reset reaction times for each test
+
         for _ in range(trials):
             self.screen.fill(self.BLACK)
 
@@ -71,7 +121,7 @@ class StroopTest:
             color, text = self.get_random_color_and_text()
 
             # Display the text
-            self.display_text(text, color, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 3)
+            self.display_text(text, color, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2.2)
 
             # Draw buttons
             buttons = []
@@ -92,8 +142,7 @@ class StroopTest:
             while user_input is None:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        pygame.quit()
-                        return
+                        return True
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         pos = pygame.mouse.get_pos()
                         user_input = self.check_button_click(pos, buttons)
@@ -107,15 +156,30 @@ class StroopTest:
 
             # Display reaction time
             self.screen.fill(self.BLACK)
-            self.display_text(f"Reaction Time: {reaction_time:.3f} seconds", self.WHITE, self.SCREEN_WIDTH // 2,
-                              self.SCREEN_HEIGHT // 2)
+            self.display_text(f"Reaction Time: {reaction_time:.3f} seconds", self.WHITE, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2)
             pygame.display.flip()
 
             # Wait for a while before showing the next color
             pygame.time.wait(2000)
 
-    def get_reaction_times(self):
-        return self.reaction_times
+        return False
+
+    def display_next_button(self):
+        next_button = pygame.Rect(self.SCREEN_WIDTH // 2 - 75, self.SCREEN_HEIGHT - 100, 150, 50)
+        self.draw_button("Next", self.GREEN, next_button.x, next_button.y, next_button.width, next_button.height)
+        pygame.display.flip()
+
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return True
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    if next_button.collidepoint(pos):
+                        waiting = False
+
+        return False
 
     def save_reaction_times(self, filename):
         with open(filename, 'a') as file:
@@ -124,16 +188,20 @@ class StroopTest:
 
             # Calculate and save the average reaction time
             avg_reaction_time = sum(self.reaction_times) / len(self.reaction_times)
-            file.write(f"Name: {self.user_name} | Trial: avg | Reaction time: {avg_reaction_time:.6f} seconds\n")
+            file.write(f"Name: {self.user_name} | Average Reaction time: {avg_reaction_time:.6f} seconds\n")
             file.write("\n")
 
-
 if __name__ == "__main__":
-    user_name = input("Enter your name: ")
-    trials = 10  # Number of trials for the test
     filename = 'reaction_times.txt'  # Output file
+    stroop_test = StroopTest()
 
-    stroop_test = StroopTest(user_name)
-    stroop_test.run_test(trials)
-    stroop_test.save_reaction_times(filename)
+    while True:
+        if stroop_test.get_user_name():
+            break
+        if stroop_test.run_test(trials=2):  # Set to 2 trials for testing
+            break
+        stroop_test.save_reaction_times(filename)
+        if stroop_test.display_next_button():
+            break
+    pygame.quit()
     print(f"Reaction times saved to {filename}")
