@@ -1,9 +1,2 @@
 
-Name: im gay | Trial: 1 | Reaction time: 1.344319 seconds
-Name: im gay | Trial: 2 | Reaction time: 0.465127 seconds
-Name: im gay | Average Reaction time: 0.904723 seconds
-
-Name: im also gay | Trial: 1 | Reaction time: 2.066539 seconds
-Name: im also gay | Trial: 2 | Reaction time: 6.351358 seconds
-Name: im also gay | Average Reaction time: 4.208949 seconds
 
