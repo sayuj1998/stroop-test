@@ -1,6 +1,12 @@
-![Stroop Test Screenshot](https://github.com/user-attachments/assets/c46fb7d1-80e3-4f68-a6ac-84ab6194f346)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c46fb7d1-80e3-4f68-a6ac-84ab6194f346" alt="Stroop Test Screenshot" width="600">
+</p>
 
-![Stroop Test Screenshot](https://github.com/user-attachments/assets/aab865ab-e982-494a-b7de-b54b3486c5d5)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/aab865ab-e982-494a-b7de-b54b3486c5d5" alt="Stroop Test Screenshot 2" width="600">
+</p>
+
 
 
 # Stroop Test Game
