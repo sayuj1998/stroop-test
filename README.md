@@ -1,3 +1,7 @@
+![Stroop Test Screenshot](https://github.com/user-attachments/assets/c46fb7d1-80e3-4f68-a6ac-84ab6194f346)
+![Stroop Test Screenshot](https://github.com/user-attachments/assets/aab865ab-e982-494a-b7de-b54b3486c5d5)
+
+
 # Stroop Test Game
 
 A cognitive psychology experiment built in Python using Pygame, designed to measure reaction time and cognitive interference (based on the classic Stroop effect).
