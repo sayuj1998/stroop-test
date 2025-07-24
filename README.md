@@ -19,7 +19,42 @@ Reaction times are recorded for each trial, and incorrect answers are tracked. R
 
 Install with:
 
-```bash
+```
 pip install pygame
 ```
 
+## How To Run
+
+1. Clone the repository:
+```
+git clone https://github.com/sayuj1998/stroop-test.git
+cd stroop-test
+```
+
+2. Run the game:
+```
+python stroop_test.py
+```
+
+## Features
+- Clean GUI using Pygame
+- Text input for user's name
+- Color-word interference test with clickable color buttons
+- Tracks:
+  - Reaction time per trial
+  - Average reaction time
+  - Incorrect responses
+  - Saves results to reaction_times.txt
+
+## Change Number of Trials
+To adjust the number of trials in the game, change this line inside the **main** block:
+```
+stroop_test.run_test(trials=4)
+```
+
+## What is the Stroop Effect?
+The Stroop effect is a psychological phenomenon where your brain takes longer to name the color of the word when the word itself spells a different color. This task demonstrates cognitive interference and is often used in cognitive science and psychology research.
+
+## License
+This project is licensed under the **MIT License**.
+Feel free to use, modify, and share it.
