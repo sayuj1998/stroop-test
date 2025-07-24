@@ -127,7 +127,7 @@ class StroopTest:
             input_box.w = width
             self.screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
             pygame.draw.rect(self.screen, color, input_box, 2)
-            self.display_text("Welcome to SXU Stroop Test", self.WHITE, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 - 180)
+            self.display_text("Welcome to the Stroop Test", self.WHITE, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 - 180)
             self.display_text("Enter your name:", self.WHITE, self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2 - 100)
             self.draw_button("Go", self.GREEN, go_button.x, go_button.y, go_button.width, go_button.height)
             pygame.display.flip()
